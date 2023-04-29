@@ -4,7 +4,7 @@
 
 	<p class="mt"><%= form.label :user_id %></p>
 	<p><%= form.text_field :user_id, class: 'form-text-field' %></p>
-
+  <p class="mt">Скрытый вопрос <%= form.check_box :hidden %></p>
 	<p class="mt">
 	<%= form.submit 'Сохранить', class: 'button button-main' %> или
 	<%= link_to 'вернуться', :back %>
