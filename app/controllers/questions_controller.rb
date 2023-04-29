@@ -1,16 +1,16 @@
 class QuestionsController < ApplicationController
-	before_action :set_question, only: %i[show edit update destroy hide]
+  before_action :set_question, only: %i[show edit update destroy hide]
 
-	def create
+  def create
     @question = Question.create(question_params)
     redirect_to question_path(@question), notice: 'Новый вопрос создан!'
-	end
+  end
 
-	def update
-		@question.update(question_params)
+  def update
+    @question.update(question_params)
 
-		redirect_to question_path(@question), notice: 'Обновили вопрос!'		
-	end
+    redirect_to question_path(@question), notice: 'Обновили вопрос!'
+  end
 
   def hide
     @question.update(hidden: true)
@@ -18,35 +18,34 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-		@question.destroy
+    @question.destroy
 
-		redirect_to questions_path, notice: 'Вопрос удален!'
-	end
+    redirect_to questions_path, notice: 'Вопрос удален!'
+  end
 
-	def show
-	end
+  def show
+  end
 
-	def index
-		@question = Question.new
-		@questions=Question.all
-	end
+  def index
+    @question = Question.new
+    @questions = Question.all
+  end
 
-	def new
-		@question = Question.new
-	end
+  def new
+    @question = Question.new
+  end
 
   def edit
-	end
+  end
 
-  private 
+  private
 
   def set_question
     @question = Question.find(params[:id])
   end
 
   def question_params
-     params.require(:question).permit(:body, :user_id, :hidden)
+    params.require(:question).permit(:body, :user_id, :hidden)
   end
-
 
 end

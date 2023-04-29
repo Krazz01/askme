@@ -21,6 +21,6 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  url: <%= ENV.fetch("DATABASE_URL") %>
+ adapter: postgresql
+ url: <%= ENV.fetch("DATABASE_URL") %>
   
