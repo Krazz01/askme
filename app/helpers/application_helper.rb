@@ -1,4 +1,4 @@
-	module ApplicationHelper
+module ApplicationHelper
   def inclination(count, one, few, many)
     return many if (count % 100).between?(11, 14)
 
