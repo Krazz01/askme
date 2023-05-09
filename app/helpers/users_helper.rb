@@ -3,6 +3,6 @@ module UsersHelper
     "@#{user.nickname}"
   end
   def navbar_color(user)
-    user.color
+    user.navcolor
   end
 end

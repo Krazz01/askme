@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   NICKNAME_REGEX = /\A\w+\z/.freeze
-  EMAIL_REGEX = /\A[a-z\d_+.\-]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/.freeze
+  EMAIL_REGEX =  /.+@.+\..+/.freeze
+
 
   has_secure_password
 
@@ -11,6 +12,8 @@ class User < ApplicationRecord
 
   validates :nickname, presence: true, uniqueness: true, length: { maximum: 40 },
             format: { with: NICKNAME_REGEX }
+
+  has_many :questions, dependent: :delete_all
 
   def downcase_nickname
     nickname.downcase!

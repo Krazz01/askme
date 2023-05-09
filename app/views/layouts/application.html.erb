@@ -7,25 +7,30 @@
   <%= csp_meta_tag %>
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
+
 </head>
 <body>
+<div class="input-append color" data-color="rgb(255, 146, 180)" data-color-format="rgb">
+  <input type="text" class="span2" value="">
+  <span class="add-on"><i style="background-color: rgb(255, 146, 180)"></i></span>
+</div>
+
 <div class="wrapper">
   <% if current_user.present? %>
-  <div class="navbar" style="background-color: #<%= navbar_color(current_user) %>">
+    <div class="navbar" style="background-color: <%= navbar_color(current_user) %>">
   <% else %>
-    <div class="navbar" style="background-color: '#370617'">
+    <div class="navbar" style="background-color: '#370617">
   <% end %>
-    <p class="title-sm text-bold"><%= link_to 'Ask me!', root_path %></p>
-    <div>
-      <% if current_user.present? %>
-        <%= content_tag 'span', display_nickname(current_user), class: 'mr-sm' %>
-        <%= button_to 'Выйти', session_path, method: :delete %>
-      <% else %>
-        <%= link_to 'Регистрация', new_user_path, class: 'button button-yellow mr-sm' %>
-        <%= link_to 'Вход', new_session_path, class: 'button button-yellow' %>
-      <% end %>
-    </div>
+  <p class="title-sm text-bold"><%= link_to 'Ask me!', root_path %></p>
+  <div>
+    <% if current_user.present? %>
+      <%= link_to display_nickname(current_user), user_path(current_user), class: 'mr-sm' %>
+      <%= button_to 'Выйти', session_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Регистрация', new_user_path, class: 'button button-yellow mr-sm' %>
+      <%= link_to 'Вход', new_session_path, class: 'button button-yellow' %>
+    <% end %>
+  </div>
   </div>
   <% if flash[:notice].present? %>
     <p class="mb mt message message-notice"><%= flash[:notice] %></p>
@@ -34,6 +39,6 @@
   <% end %>
 
   <%= yield %>
-</div>
+  </div>
 </body>
 </html>
