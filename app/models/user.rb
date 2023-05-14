@@ -2,7 +2,6 @@ class User < ApplicationRecord
   NICKNAME_REGEX = /\A\w+\z/.freeze
   EMAIL_REGEX =  /.+@.+\..+/.freeze
 
-
   has_secure_password
 
   before_validation :downcase_nickname
@@ -14,6 +13,9 @@ class User < ApplicationRecord
             format: { with: NICKNAME_REGEX }
 
   has_many :questions, dependent: :delete_all
+
+  include Gravtastic
+  gravtastic(secure: true, filetype: :png, size: 100, default: 'retro')
 
   def downcase_nickname
     nickname.downcase!

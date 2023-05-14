@@ -1,5 +1,6 @@
 <div class="container">
   <h2 class="title-lg mb">Редактирование вопроса <%= @question.id %></h2>
+
   <% if @question.errors.any? %>
     <div class="mt">
       <% @question.errors.full_messages.each do |message| %>

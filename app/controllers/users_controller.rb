@@ -32,14 +32,12 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-
     session.delete(:user_id)
-
     redirect_to root_path, notice: 'Пользователь удален!'
   end
 
   def show
-    @questions = @user.questions
+    @questions = @user.questions.order(created_at: :desc)
     @question = Question.new(user: @user)
   end
 

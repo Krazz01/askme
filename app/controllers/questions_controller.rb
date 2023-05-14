@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question_params = params.require(:question).permit(:body, :answer)
+    question_params = params.require(:question).permit(:body, :answer, :hidden)
     @question.update(question_params)
     if @question.save
       redirect_to user_path(@question.user), notice: 'Вопрос обновлен!'
@@ -23,18 +23,17 @@ class QuestionsController < ApplicationController
       flash.now[:alert] = 'Вы неправильно заполнили поля формы'
       render :new
     end
-
   end
 
   def hide
     @question.update(hidden: true)
-    redirect_to question_path(root_path), notice: 'Вопрос скрыт!'
+    redirect_to question_path(@question.user), notice: 'Вопрос скрыт!'
   end
 
   def destroy
     @user = @question.user
     @question.destroy
-    redirect_to user_path(@ser), notice: 'Вопрос удален!'
+    redirect_to user_path(@user), notice: 'Вопрос удален!'
   end
 
   def show
@@ -42,8 +41,8 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @question = Question.new
-    @questions = Question.all
+    @questions = Question.order(created_at: :desc).last(10)
+    @users = User.order(created_at: :desc).last(10)
   end
 
   def new
