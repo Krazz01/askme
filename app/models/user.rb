@@ -1,8 +1,11 @@
 class User < ApplicationRecord
-  NICKNAME_REGEX = /\A\w+\z/.freeze
-  EMAIL_REGEX =  /.+@.+\..+/.freeze
+  include Gravtastic
 
-  has_secure_password
+  NICKNAME_REGEX = /\A\w+\z/.freeze
+  EMAIL_REGEX = /.+@.+\..+/.freeze
+  COLOR_REGEX = /\A#\h{3}{1,2}\z/.freeze
+
+  has_many :questions, dependent: :delete_all
 
   before_validation :downcase_nickname
 
@@ -12,12 +15,15 @@ class User < ApplicationRecord
   validates :nickname, presence: true, uniqueness: true, length: { maximum: 40 },
             format: { with: NICKNAME_REGEX }
 
-  has_many :questions, dependent: :delete_all
+  validates :navcolor, format: { with: COLOR_REGEX }, presence: true
 
-  include Gravtastic
-  gravtastic(secure: true, filetype: :png, size: 100, default: 'retro')
+  gravtastic(secure: true, filetype: :png, size: 100, default: 'mp')
+
+  has_secure_password
+
+  private
 
   def downcase_nickname
-    nickname.downcase!
+    nickname&.downcase!
   end
 end

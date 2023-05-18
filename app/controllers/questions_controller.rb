@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
 
     if @question.save
-      redirect_to user_path(@question.user), notice: 'Новый вопрос создан!'
+      redirect_to user_path(@question.user.nickname), notice: 'Новый вопрос создан!'
     else
       flash.now[:alert] = 'Вы неправильно заполнили поля формы'
       render :new
@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
     question_params = params.require(:question).permit(:body, :answer, :hidden)
     @question.update(question_params)
     if @question.save
-      redirect_to user_path(@question.user), notice: 'Вопрос обновлен!'
+      redirect_to user_path(@question.user.nickname), notice: 'Вопрос обновлен!'
     else
       flash.now[:alert] = 'Вы неправильно заполнили поля формы'
       render :new
@@ -27,13 +27,13 @@ class QuestionsController < ApplicationController
 
   def hide
     @question.update(hidden: true)
-    redirect_to question_path(@question.user), notice: 'Вопрос скрыт!'
+    redirect_to question_path(@question), notice: 'Вопрос скрыт!'
   end
 
   def destroy
     @user = @question.user
     @question.destroy
-    redirect_to user_path(@user), notice: 'Вопрос удален!'
+    redirect_to user_path(@user.nickname), notice: 'Вопрос удален!'
   end
 
   def show
@@ -46,8 +46,9 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @user = User.find(params[:user_id])
-    @question = Question.new(user: @user)
+    # @user = User.find(params[:user_id])
+    # @question = Question.new(user: @user)
+    @question = User.find_by(nickname: params[:nickname]).questions.build
   end
 
   def edit
