@@ -15,7 +15,7 @@
       <%= l(question.created_at, format: :short) %>
     </div>
 
-    <div style="opacity: <%= 0.5 if question.hidden? %>">
+    <div class="<%= 'question-body-hidden' if question.hidden? %>">
       <% edit_icon = question.answer.blank? ? 'reply' : 'pencil' %>
       <% edit_title = question.answer.blank? ? 'Ответить на вопрос' : 'Изменить вопрос' %>
 
