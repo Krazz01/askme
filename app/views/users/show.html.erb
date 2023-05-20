@@ -1,7 +1,5 @@
 <div class="user-box">
   <h2 class="title-lg mt-lg"><%= @user.name %></h2>
-
-
   <div class="mt">
     <%= render partial: 'users/user_avatar', locals: { user: @user } %>
   </div>
@@ -27,7 +25,6 @@
   <h2 class="title-lg">
     <%= @questions.count %>
     <%= inclination(@questions.count, 'вопрос', 'вопроса', 'вопросов') %>
-
   </h2>
 </div>
 

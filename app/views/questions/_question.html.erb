@@ -1,4 +1,4 @@
-<div class="break-line mb-sm" style="opacity: <%= 0.3 if question.hidden? %>">
+<div class="break-line mb-sm <%= 'question-body-hidden' if question.hidden? %>">
   <%= question.body %>
 </div>
 
